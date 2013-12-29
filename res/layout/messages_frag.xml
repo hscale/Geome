@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100" >
+
+    <LinearLayout
+        android:id="@+id/ll_messages_send"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="#9BCDFF"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:weightSum="100" >
+
+        <EditText
+            android:id="@+id/et_send"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="90"
+            android:cursorVisible="true"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:singleLine="false"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/iv_send"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:contentDescription="@string/gif_spinner"
+            android:src="@drawable/ic_menu_send" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_messages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_messages_send"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/cloth_repeating"
+        android:stackFromBottom="true" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@color/black" />
+
+</RelativeLayout>

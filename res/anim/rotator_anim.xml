@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/anim_rotator"
+    android:oneshot="false" >
+
+    <item
+        android:drawable="@drawable/rotator_0"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_1"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_2"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_3"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_4"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_5"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_6"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_7"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_8"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_9"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_10"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/rotator_11"
+        android:duration="100"/>
+
+</animation-list>

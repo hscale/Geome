@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Geome</string>
+    <string name="title_activity_login">Geome</string>
+    <string name="app_id">186056184920382</string>
+    <string name="gif_spinner">GIF Spinner</string>
+    <string name="groups">Groups</string>
+    <string name="rotator">Rotator</string>
+    <string name="add">Add</string>
+    <string name="logout">Logout</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_0">0 min</string>
+    <string name="send_request">Send Request</string>
+    <string name="friends_name">Friend\'s name</string>
+    <string name="send">send</string>
+
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- buttons -->
+    <color name="lightred">#FFFF0000</color>
+    <color name="darkred">#FFCC0000</color>
+
+    <!-- Main Colors -->
+    <color name="main_blue">#33b5e5</color>
+    <color name="main_light_blue">#eeffff</color>
+
+    <!-- Gang Colors -->
+    <color name="gang_orange">#FF9933</color>
+    <color name="gang_red">#F7535F</color>
+    <color name="gang_pink">#FF66CC</color>
+    <color name="gang_yellow">#FFFF33</color>
+    <color name="gang_purple">#9966CC</color>
+    <color name="gang_green">#33CC33</color>
+    <!-- Light Gang Colors -->
+    <color name="light_gang_orange">#FFBB55</color>
+    <color name="light_gang_red">#F9757F</color>
+    <color name="light_gang_pink">#FF88EE</color>
+    <color name="light_gang_yellow">#FFFF55</color>
+    <color name="light_gang_purple">#BB88EE</color>
+    <color name="light_gang_green">#55EE55</color>
+    <!-- Random Useful Colors -->
+    <color name="light_orange">#8f90</color>
+    <color name="light_blue">#17B0E9</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="whitepink">#FFE6DEDE</color>
+    <color name="greenbackground">#FF48A448</color>
+    <color name="pinkbackground">#FFEE1289</color>
+    <color name="greybackground">#FF6C7B8B</color>
+    <color name="red">#FFE91C17</color>
+    <color name="coffee"> #FF6F4E37</color>
+
+</resources>

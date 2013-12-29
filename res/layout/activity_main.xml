@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_outer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="tesler.will.geome.TransparentSupportMapFragment"
+        android:background="#00000000" />
+
+    <!-- Dummy that prevents autofocus of edittexts (& is a cloud) -->
+
+    <LinearLayout
+        android:id="@+id/ll_clouds_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/clouds_3"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/ll_clouds_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/clouds_2"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/ll_clouds_0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/clouds_1"
+        android:orientation="vertical" />
+
+</RelativeLayout>
