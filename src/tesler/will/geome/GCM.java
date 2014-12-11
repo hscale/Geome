@@ -44,7 +44,7 @@ import com.mongodb.MongoException;
 public class GCM {
 
 	// Database
-	String uriString = "mongodb://wtesler:Violentomega13@ds053138-a0.mongolab.com:53138,ds053138-a1.mongolab.com:53138/pinpoint";
+	String uriString = "YOUR DATABASE HERE!!!!";
 	private MongoClientURI uri = new MongoClientURI(uriString);
 	private MongoClient mc;
 	private DB db;
@@ -53,7 +53,7 @@ public class GCM {
 	public static final String EXTRA_MESSAGE = "message";
 	private static final String PROPERTY_APP_VERSION = "appVersion";
 
-	String SENDER_ID = "68645866072";
+	String SENDER_ID = "YOUR SENDER ID HERE";
 
 	GoogleCloudMessaging gcm;
 	AtomicInteger msgId = new AtomicInteger();
