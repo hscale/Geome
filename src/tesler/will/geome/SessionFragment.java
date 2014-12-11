@@ -37,7 +37,7 @@ public class SessionFragment extends Fragment {
 
 	final int NUM_PAGES = 2;
 
-	ViewPager pager;
+	static ViewPager pager;
 	PagerAdapter adapter;
 
 	LinearLayout groupsPanel;

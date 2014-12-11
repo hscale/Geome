@@ -16,8 +16,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 public class Images {
 
-	HashMap<String, Integer> colors = new HashMap<String, Integer>();
-
 	HashMap<String, Bitmap> icons = new HashMap<String, Bitmap>();
 
 	// public void showPlaceMarker(Place place) {

@@ -42,7 +42,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 				String groupName = intent.getStringExtra(Keys.GNAME);
 				String groupId = intent.getStringExtra(Keys.GROUPID);
 
-				GroupsPane.ShowMailDialog(name, groupName, groupId);
+				GroupsPane.ShowInviteDialog(name, groupName, groupId);
 
 			} else if (broadcast.contentEquals(Keys.ACTIONMARCO)) {
 
@@ -91,7 +91,6 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 				}
 			} else if (broadcast.contentEquals(Keys.ACTIONLOCATION)) {
 				String id = intent.getStringExtra(Keys.ID);
-				// String name = intent.getStringExtra(Keys.NAME);
 				Double lat = Double
 						.parseDouble(intent.getStringExtra(Keys.LAT));
 				Double lon = Double

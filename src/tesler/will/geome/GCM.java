@@ -62,7 +62,7 @@ public class GCM {
 
 	SharedPreferences preferences;
 
-	GcmBroadcastReceiver gbr;
+	static GcmBroadcastReceiver gbr;
 
 	GCM() {
 
@@ -70,6 +70,8 @@ public class GCM {
 				Context.MODE_PRIVATE);
 
 		gcm = GoogleCloudMessaging.getInstance(Main.cont);
+
+		registerReceiver();
 
 	}
 
@@ -79,8 +81,6 @@ public class GCM {
 
 		if (Main.self.member.gcmid == null) {
 			registerInBackground();
-		} else {
-			registerReceiver();
 		}
 
 	}
@@ -192,7 +192,6 @@ public class GCM {
 			if (state.contentEquals("SUCCESS")) {
 				Log.i("Generate ID Async", "New GCM ID created.");
 				storeRegistrationId(Main.self.member.gcmid);
-				registerReceiver();
 				counter = 0;
 				hasChanged = true;
 			}
@@ -213,7 +212,7 @@ public class GCM {
 
 	Integer counter = 0;
 
-	private void registerReceiver() {
+	static void registerReceiver() {
 
 		// GCM Broadcast Receiver
 

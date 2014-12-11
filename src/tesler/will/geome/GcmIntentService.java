@@ -2,15 +2,8 @@ package tesler.will.geome;
 
 import tesler.will.geome.Ogg.RetrieveRecordingAsync;
 import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -21,6 +14,8 @@ public class GcmIntentService extends IntentService {
 	public GcmIntentService() {
 
 		super("GcmIntentService");
+
+		new Notifications(this);
 
 	}
 
@@ -47,25 +42,28 @@ public class GcmIntentService extends IntentService {
 
 				if (action.contentEquals(Keys.ACTIONMESSAGE)) {
 
+					String id = intent.getStringExtra(Keys.ID);
+					String name = intent.getStringExtra(Keys.NAME);
 					String groupid = intent.getStringExtra(Keys.GROUPID);
+					String message = intent.getStringExtra(Keys.MESSAGE);
 
 					if (Main.inForeground
 							&& GroupsPane.curGroup.id.contentEquals(groupid)) {
 
 						Bundle b = new Bundle();
-						b.putString(Keys.NAME, intent.getStringExtra(Keys.NAME));
+						b.putString(Keys.ID, id);
+						b.putString(Keys.NAME, name);
 						b.putString(Keys.GROUPID, groupid);
-						b.putString(Keys.ID, intent.getStringExtra(Keys.ID));
-						b.putString(Keys.MESSAGE,
-								intent.getStringExtra(Keys.MESSAGE));
+						b.putString(Keys.MESSAGE, message);
 
 						// Pass the invite on to the main thread
 						broadcast(Keys.ACTIONMESSAGE, b);
 
 					} else {
 
-						newMessage(intent.getStringExtra(Keys.MESSAGE), true,
-								80085);
+						Notifications.create(name + ": " + message, true,
+								groupid.hashCode(), Keys.ACTIONMESSAGE,
+								groupid, null, null);
 					}
 
 				} else if (action.contentEquals(Keys.ACTIONLOCATION)) {
@@ -116,21 +114,25 @@ public class GcmIntentService extends IntentService {
 
 				} else if (action.contentEquals(Keys.ACTIONINVITE)) {
 
+					String name = intent.getStringExtra(Keys.NAME);
+					String gname = intent.getStringExtra(Keys.GNAME);
+					String groupid = intent.getStringExtra(Keys.GROUPID);
+
 					if (Main.inForeground) {
 
 						Bundle b = new Bundle();
-						b.putString(Keys.NAME, intent.getStringExtra(Keys.NAME));
-						b.putString(Keys.GNAME,
-								intent.getStringExtra(Keys.GNAME));
-						b.putString(Keys.GROUPID,
-								intent.getStringExtra(Keys.GROUPID));
+						b.putString(Keys.NAME, name);
+						b.putString(Keys.GNAME, gname);
+						b.putString(Keys.GROUPID, groupid);
 
 						// Pass the invite on to the main thread
 						broadcast(Keys.ACTIONINVITE, b);
 
 					} else {
 						// Create notification in the background
-						createInviteNotification(extras.getString(Keys.NAME));
+						Notifications.create(name + " has invited you to join "
+								+ gname, true, (name + groupid).hashCode(),
+								Keys.ACTIONINVITE, groupid, name, gname);
 					}
 
 				} else if (action.contentEquals(Keys.ACTIONPOKE)) {
@@ -153,87 +155,6 @@ public class GcmIntentService extends IntentService {
 		}
 
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
-	}
-
-	public void createInviteNotification(String name) {
-
-		Log.i("GCMIntentService", "Creating notification");
-
-		NotificationManager nm = (NotificationManager) this
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-
-		nm.cancel(name.hashCode());
-
-		// NOTOFICATION BUILDER
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle("Invitation from " + name)
-				.setContentText("Touch to Respond");
-
-		mBuilder.setSound(RingtoneManager
-				.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-
-		// INTENT
-		Intent resultIntent = new Intent(this, Main.class);
-		resultIntent.putExtra(Keys.NAME, name);
-		// resultIntent.putStringArrayListExtra("gcmids", gcmIdList);
-
-		// ANDROID STACK HOCUS POCUS
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		stackBuilder.addParentStack(Main.class);
-		stackBuilder.addNextIntent(resultIntent);
-
-		// PREPARE THE NOTIFICATION
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
-
-		// PLACE THE NOTIFICATION
-		Notification notification = mBuilder.build();
-		notification.flags = Notification.FLAG_AUTO_CANCEL;
-
-		// mId allows you to update the notification later on.
-		nm.notify(name.hashCode(), notification);
-	}
-
-	public void newMessage(String message, Boolean hasSound, int id) {
-
-		NotificationManager nm = (NotificationManager) this
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-
-		nm.cancel(id);
-
-		// NOTOFICATION BUILDER
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle(message).setContentText("");
-
-		if (hasSound) {
-			mBuilder.setSound(RingtoneManager
-					.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-		}
-
-		// INTENT
-		Intent resultIntent = new Intent(this, Main.class);
-		resultIntent.putExtra("message", "message");
-
-		// ANDROID STACK HOCUS POCUS
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		stackBuilder.addParentStack(Main.class);
-		stackBuilder.addNextIntent(resultIntent);
-
-		// PREPARE THE NOTIFICATION
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
-
-		// PLACE THE NOTIFICATION
-		Notification notification = mBuilder.build();
-		notification.flags = Notification.FLAG_AUTO_CANCEL;
-
-		// mId allows you to update the notification later on.
-		nm.notify(id, notification);
-
 	}
 
 	public static void broadcast(String broadcastType, Bundle b) {

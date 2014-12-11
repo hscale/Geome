@@ -137,12 +137,22 @@ public class GroupsPane {
 		}
 	}
 
+	public void retrieveGroup(String groupid, boolean activateWhenReady) {
+
+		RetrieveGroupAsync.activateWhenReady = activateWhenReady;
+		RetrieveGroupAsync rga = new RetrieveGroupAsync();
+		rga.execute(groupid);
+	}
+
 	public void createGroup(String name) {
 		CreateGroupAsync cga = new CreateGroupAsync();
 		cga.execute(name);
 	}
 
-	private class RetrieveGroupAsync extends AsyncTask<String, String, String> {
+	private static class RetrieveGroupAsync extends
+			AsyncTask<String, String, String> {
+
+		static boolean activateWhenReady = false;
 
 		ArrayList<Group> groups = new ArrayList<Group>();
 
@@ -225,10 +235,18 @@ public class GroupsPane {
 					UpdateGcmInGroupsAsync ugiga = new UpdateGcmInGroupsAsync();
 					ugiga.execute();
 				}
+
+				if (activateWhenReady) {
+					Main.sm.showMenu(false);
+					GroupsPane.curGroup = groups.get(0);
+					GroupsPane.beginSession();
+					SessionFragment.pager.setCurrentItem(1);
+				}
 			}
 
 			if (state.contentEquals("FAILURE")) {
 				Log.w("RGA", "Failure!");
+				Utils.toast("Could not load group", Toast.LENGTH_SHORT);
 			}
 		}
 	}
@@ -351,12 +369,11 @@ public class GroupsPane {
 				gla.notifyDataSetChanged();
 
 				beginSession();
+
 			}
 
 			if (state.contentEquals("FAILURE")) {
 				Log.w("CGA", "Failure!");
-				Toast.makeText(cont, "Could not create group.",
-						Toast.LENGTH_LONG).show();
 			}
 		}
 	}
@@ -510,7 +527,7 @@ public class GroupsPane {
 		}
 	}
 
-	private class UpdateGcmInGroupsAsync extends
+	private static class UpdateGcmInGroupsAsync extends
 			AsyncTask<String, String, String> {
 
 		ArrayList<Group> groups = new ArrayList<Group>();
@@ -713,7 +730,7 @@ public class GroupsPane {
 
 	}
 
-	public static void ShowMailDialog(final String name, final String group,
+	public static void ShowInviteDialog(final String name, final String group,
 			final String groupId) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(Main.cont);
@@ -723,8 +740,8 @@ public class GroupsPane {
 			}
 		});
 
-		builder.setTitle(name + " wants you to join " + group)
-				.setMessage("Connect with " + name + "?")
+		builder.setTitle("Invitation")
+				.setMessage(name + " wants you to join " + group)
 				.setPositiveButton("Join",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {

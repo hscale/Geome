@@ -47,7 +47,7 @@ public class Main extends SlidingFragmentActivity {
 
 	static User self;
 
-	SlidingMenu sm;
+	static SlidingMenu sm;
 
 	GroupsPane gPane;
 
@@ -64,7 +64,7 @@ public class Main extends SlidingFragmentActivity {
 	private DB db;
 	private DBCollection coll;
 
-	public static Boolean inForeground = true;
+	static Boolean inForeground = false;
 
 	static GCM gcm;
 	static GCMMessage gcmMessage;
@@ -73,10 +73,14 @@ public class Main extends SlidingFragmentActivity {
 
 	static SlidingFragmentActivity activity;
 
+	private String chosenGroupId;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		inForeground = true;
 
 		cont = this;
 
@@ -315,7 +319,11 @@ public class Main extends SlidingFragmentActivity {
 				gcm = new GCM();
 				gcm.retrieveId();
 
-				gPane.retrieveGroups();
+				if (chosenGroupId != null) {
+					gPane.retrieveGroup(chosenGroupId, true);
+				} else {
+					gPane.retrieveGroups();
+				}
 
 			} else {
 				Log.w("LA", "Failure!");
@@ -333,10 +341,32 @@ public class Main extends SlidingFragmentActivity {
 	}
 
 	@Override
+	public void onNewIntent(Intent intent) {
+
+		setIntent(intent);
+
+	}
+
+	@Override
 	public void onResume() {
 		super.onResume();
 		uiHelper.onResume();
 		inForeground = true;
+
+		String type = getIntent().getStringExtra(Keys.TYPE);
+		if (type != null) {
+
+			String name = getIntent().getStringExtra(Keys.NAME);
+			String groupid = getIntent().getStringExtra(Keys.GROUPID);
+			String gname = getIntent().getStringExtra(Keys.GNAME);
+
+			if (type.contentEquals(Keys.ACTIONMESSAGE)) {
+				chosenGroupId = groupid;
+			} else if (type.contentEquals(Keys.ACTIONINVITE)) {
+				GroupsPane.ShowInviteDialog(name, gname, groupid);
+			}
+		}
+
 	}
 
 	@Override
@@ -353,7 +383,8 @@ public class Main extends SlidingFragmentActivity {
 		if (GroupsPane.groupList != null)
 			GroupsPane.groupList.clear();
 
-		gcm.unregisterReceiver();
+		if (gcm != null)
+			gcm.unregisterReceiver();
 
 		uiHelper.onDestroy();
 	}

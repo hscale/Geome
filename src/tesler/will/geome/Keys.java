@@ -66,4 +66,7 @@ public class Keys {
 
 	static final String BROADCAST = "broadcast";
 
+	// INTENT
+	static final String TYPE = "intent type";
+
 }

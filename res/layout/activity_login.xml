@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:background="@anim/login_anim" >
 
-    <!-- Dummy that prevents autofocus of edittexts -->
-
     <LinearLayout
         android:layout_width="0px"
         android:layout_height="0px"
@@ -18,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:contentDescription="Logo"
+        android:contentDescription="@string/_0"
         android:src="@drawable/geome_logo" />
 
     <com.facebook.widget.LoginButton
@@ -38,7 +36,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="0dp"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="text"
         android:textSize="25sp" />
 
@@ -57,8 +55,8 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="3"
-            android:hint="Password"
-            android:inputType="text"
+            android:hint="@string/password"
+            android:inputType="textPassword"
             android:textSize="25sp" />
 
         <Button
@@ -67,7 +65,7 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="2"
-            android:text="Login"
+            android:text="@string/login"
             android:textSize="25sp" />
     </LinearLayout>
 

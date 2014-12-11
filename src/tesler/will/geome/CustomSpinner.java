@@ -59,9 +59,10 @@ public class CustomSpinner extends Spinner {
 	}
 
 	protected SpinnerAdapter newProxy(SpinnerAdapter obj) {
-		return (SpinnerAdapter) java.lang.reflect.Proxy.newProxyInstance(obj.getClass()
-				.getClassLoader(), new Class[] { SpinnerAdapter.class },
-				new SpinnerAdapterProxy(obj));
+		return (SpinnerAdapter) java.lang.reflect.Proxy.newProxyInstance(obj
+				.getClass().getClassLoader(),
+				new Class[] { SpinnerAdapter.class }, new SpinnerAdapterProxy(
+						obj));
 	}
 
 	/**
@@ -75,18 +76,19 @@ public class CustomSpinner extends Spinner {
 		protected SpinnerAdapterProxy(SpinnerAdapter obj) {
 			this.obj = obj;
 			try {
-				this.getView = SpinnerAdapter.class.getMethod("getView", int.class,
-						View.class, ViewGroup.class);
+				this.getView = SpinnerAdapter.class.getMethod("getView",
+						int.class, View.class, ViewGroup.class);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		}
 
-		public Object invoke(Object proxy, Method m, Object[] args) throws Throwable {
+		public Object invoke(Object proxy, Method m, Object[] args)
+				throws Throwable {
 			try {
 				return m.equals(getView) && (Integer) (args[0]) < 0 ? getView(
-						(Integer) args[0], (View) args[1], (ViewGroup) args[2]) : m
-						.invoke(obj, args);
+						(Integer) args[0], (View) args[1], (ViewGroup) args[2])
+						: m.invoke(obj, args);
 			} catch (InvocationTargetException e) {
 				throw e.getTargetException();
 			} catch (Exception e) {
@@ -99,8 +101,9 @@ public class CustomSpinner extends Spinner {
 
 			if (position < 0) {
 				final TextView v = (TextView) ((LayoutInflater) getContext()
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
-						android.R.layout.simple_spinner_item, parent, false);
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+						.inflate(android.R.layout.simple_spinner_item, parent,
+								false);
 				v.setText(getPrompt());
 				v.setTextSize(18);
 				v.setGravity(Gravity.CENTER);

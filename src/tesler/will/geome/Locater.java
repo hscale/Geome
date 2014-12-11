@@ -102,11 +102,14 @@ public class Locater {
 
 		if (listener == null) {
 
+			//Create the GPS Listener Object
 			listener = new LocationListener() {
 
+				//What do we need to do when the location is changed?
 				@Override
 				public void onLocationChanged(Location loc) {
 
+					//If Wifi
 					if (monitor.isNetworkConnected()
 							&& monitor.networkType == ConnectivityManager.TYPE_WIFI) {
 
@@ -116,12 +119,15 @@ public class Locater {
 								Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 						if (locationProviders != null
 								&& !locationProviders.equals("")) {
+							//Lock our location.
 							monitor.locationLocked = true;
 						}
 					}
 
+					//If we have had a steady lock
 					if (monitor.locationLocked && (counter >= 2 || first)) {
 
+						//Swap 
 						Double oldLat = self.member.lat;
 						Double oldLong = self.member.lon;
 
@@ -151,15 +157,9 @@ public class Locater {
 									self.member.lat, self.member.lon, results);
 
 							if (results[0] > 35 && wobble > -interval / 2) {
-								// wobble -= 5000;
-								// if (wobble < -interval / 2)
-								// wobble = (int) (-interval / 2);
 
 							} else if (results[0] <= 35
 									&& wobble < interval / 2) {
-								// wobble += 3000;
-								// if (wobble > interval / 2)
-								// wobble = (int) (interval / 2);
 							}
 
 						} catch (NullPointerException npe) {
