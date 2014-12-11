@@ -20,6 +20,8 @@ see where the other is in real-time (as long as you stay connected). Some uses f
 
 You can see all my classes inside src
 
+-Locator.java includes my prediction algorithm for sparse long-term use of the GPS.
+
 All resources in res
 
 Everything else, libs
